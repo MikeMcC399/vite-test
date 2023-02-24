@@ -12,13 +12,3 @@ jobs:
       run: npm ci
     - name: Test
       run: npx start-server-and-test dev http://localhost:5173 cy:run
-
-  host-start:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: dependencies
-      run: npm ci
-    - name: Test
-      run: npx start-server-and-test 'npx vite --host' http://localhost:5173 cy:run

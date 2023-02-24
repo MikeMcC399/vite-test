@@ -1,0 +1,55 @@
+name: Test vite (GHA)
+
+on: workflow_dispatch
+
+jobs:
+  simple:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: Test
+      uses: cypress-io/github-action@v5
+      with:
+        start: npm run dev
+
+  wait-on:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: Test
+      uses: cypress-io/github-action@v5
+      with:
+        wait-on: http://localhost:5173
+        start: npm run dev
+
+  workaround-1:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: Test
+      uses: cypress-io/github-action@v5
+      with:
+        wait-on: http://localhost:5173
+        start: npx vite --host
+
+  workaround-2:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: Test
+      uses: cypress-io/github-action@v5
+      with:
+        wait-on: http://ip6-localhost:5173
+        start: npm run dev
