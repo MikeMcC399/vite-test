@@ -1,0 +1,32 @@
+name: Test vite
+
+on: workflow_dispatch
+
+jobs:
+  standard:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: start vite server
+      run: npx vite &
+    - name: wait for server
+      run: npx wait-on http://localhost:5173 --verbose
+    - name: cypress Test
+      run: npx cypress run
+
+  host-start:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: start vite server
+      run: npx vite --host &
+    - name: wait for server
+      run: npx wait-on http://localhost:5173 --verbose
+    - name: cypress Test
+      run: npx cypress run
