@@ -28,6 +28,21 @@ jobs:
         wait-on: http://localhost:5173
         start: npm run dev
 
+  debug:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: dependencies
+      run: npm ci
+    - name: Test
+      uses: cypress-io/github-action@v5
+      env:
+        DEBUG: '@cypress/github-action, cypress:*'
+      with:
+        wait-on: http://localhost:5173
+        start: npm run dev
+
   workaround-1:
     runs-on: ubuntu-22.04
     steps:
