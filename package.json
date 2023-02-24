@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "test": "start-server-and-test dev http://localhost:5173 cy:run"
   },
   "devDependencies": {
     "cypress": "^12.6.0",
+    "start-server-and-test": "^1.15.4",
     "vite": "^4.1.0",
     "wait-on": "^7.0.1"
   }
