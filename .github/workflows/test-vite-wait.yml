@@ -13,6 +13,11 @@ jobs:
     - name: start vite server
       run: npx vite &
     - name: wait for server
-      run: npx wait-on http://localhost:5173 --verbose
+      # 10 second timeout
+      run: npx wait-on http-get://localhost:5173 --config wait-on.config.json --timeout 10000 --verbose
+    - name: netstat
+      run: netstat -lnt | grep 5173
+    - name: curl
+      run: npm run curl
     - name: cypress Test
       run: npx cypress run
