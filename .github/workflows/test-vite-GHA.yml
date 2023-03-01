@@ -10,74 +10,90 @@ jobs:
       uses: actions/checkout@v3
     - name: dependencies
       run: npm ci
-    - name: Test
-      uses: cypress-io/github-action@v5
-      with:
-        start: npm run dev
+    - name: start server
+      run: npx vite --host &
+    - name: netstat
+      run: netstat -lnt | grep 5173
+    - name: curl
+      run: npm run curl
+    - name: got
+      run: node src/got-localhost.js
 
-  wait-on-built-in:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: dependencies
-      run: npm ci
-    - name: Test
-      uses: cypress-io/github-action@v5
-      with:
-        wait-on: http://localhost:5173
-        start: npm run dev
+  # simple:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - name: dependencies
+  #     run: npm ci
+  #   - name: Test
+  #     uses: cypress-io/github-action@v5
+  #     with:
+  #       start: npm run dev
 
-  wait-on-external:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: dependencies
-      run: npm ci
-    - name: Test
-      uses: cypress-io/github-action@v5
-      with:
-        wait-on: npx wait-on http-get://localhost:5173 --config wait-on.config.json --timeout 10000 --verbose
-        start: npm run dev
+  # wait-on-built-in:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - name: dependencies
+  #     run: npm ci
+  #   - name: Test
+  #     uses: cypress-io/github-action@v5
+  #     with:
+  #       wait-on: http://localhost:5173
+  #       start: npm run dev
 
-  debug:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: dependencies
-      run: npm ci
-    - name: Test
-      uses: cypress-io/github-action@v5
-      env:
-        DEBUG: '@cypress/github-action, cypress:*'
-      with:
-        wait-on: http://localhost:5173
-        start: npm run dev
+  # wait-on-external:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - name: dependencies
+  #     run: npm ci
+  #   - name: Test
+  #     uses: cypress-io/github-action@v5
+  #     with:
+  #       wait-on: npx wait-on http-get://localhost:5173 --config wait-on.config.json --timeout 10000 --verbose
+  #       start: npm run dev
 
-  workaround-1:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: dependencies
-      run: npm ci
-    - name: Test
-      uses: cypress-io/github-action@v5
-      with:
-        wait-on: http://localhost:5173
-        start: npx vite --host
+  # debug:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - name: dependencies
+  #     run: npm ci
+  #   - name: Test
+  #     uses: cypress-io/github-action@v5
+  #     env:
+  #       DEBUG: '@cypress/github-action, cypress:*'
+  #     with:
+  #       wait-on: http://localhost:5173
+  #       start: npm run dev
 
-  workaround-2:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: dependencies
-      run: npm ci
-    - name: Test
-      uses: cypress-io/github-action@v5
-      with:
-        wait-on: http://ip6-localhost:5173
-        start: npm run dev
+  # workaround-1:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - name: dependencies
+  #     run: npm ci
+  #   - name: Test
+  #     uses: cypress-io/github-action@v5
+  #     with:
+  #       wait-on: http://localhost:5173
+  #       start: npx vite --host
+
+  # workaround-2:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - name: dependencies
+  #     run: npm ci
+  #   - name: Test
+  #     uses: cypress-io/github-action@v5
+  #     with:
+  #       wait-on: http://ip6-localhost:5173
+  #       start: npm run dev
